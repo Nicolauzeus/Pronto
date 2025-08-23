@@ -1,0 +1,14 @@
+1. Problemática para Justificar o Projeto
+A problemática central que o PortfólioHub pode resolver é a invisibilidade e a dificuldade de conexão para talentos de comunidades específicas no mercado de trabalho brasileiro.
+
+Podemos desdobrar isso em alguns pontos-chave:
+
+Ponte Cultural e Profissional: Profissionais talentosos de países da CPLP (Comunidade dos Países de Língua Portuguesa), como Angola, Moçambique, Cabo Verde, etc., que residem no Brasil, muitas vezes enfrentam uma barreira de visibilidade. Eles possuem habilidades de alto nível, mas não estão nos radares tradicionais dos recrutadores brasileiros.
+
+Centralização de Talentos Específicos: Empresas que buscam ativamente por diversidade ou por profissionais com vivências internacionais (especialmente do contexto afro-brasileiro e africano) não têm um local centralizado para encontrar esses talentos. O seu projeto pode ser essa "vitrine".
+
+Destaque para Alunos da UNILAB: A UNILAB (Universidade da Integração Internacional da Lusofonia Afro-Brasileira) é uma instituição única, formando profissionais com uma perspectiva internacional. No entanto, seus alunos podem ter dificuldade em divulgar seus trabalhos para além do ambiente acadêmico. O seu projeto já destaca isso com o selo "UNILAB", o que é um grande diferencial.
+
+Fragmentação de Portfólios: Profissionais criativos (designers, desenvolvedores, fotógrafos) espalham seus trabalhos em diversas plataformas (Behance, Dribbble, GitHub, sites pessoais). O PortfólioHub unifica tudo isso em um só lugar, facilitando a busca para quem contrata.
+
+Resumo da Problemática: O PortfólioHub surge para conectar o talento criativo da lusofonia, especialmente de comunidades africanas e de alunos da UNILAB residentes no Brasil, com as oportunidades do mercado de trabalho, quebrando barreiras de visibilidade e criando uma ponte direta entre recrutadores e profissionais qualificados.

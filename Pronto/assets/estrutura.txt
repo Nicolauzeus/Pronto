@@ -1,0 +1,15 @@
+Pronto/
+├── index.html              # Página principal
+├── dashboard.html          # Painel de administração
+├── css/
+│   ├── style.css          # Estilos principais
+│   └── dashboard.css      # Estilos específicos do dashboard
+├── js/
+│   ├── main.js            # Lógica principal do site
+│   ├── dashboard.js       # Lógica do dashboard
+│   └── utils.js           # Funções utilitárias compartilhadas
+├── assets/
+│   ├── images/            # Imagens do projeto
+│   ├── icons/             # Ícones personalizados
+│   └── uploads/           # Futuro: uploads de imagens
+└── README.md              # Documentação do projeto

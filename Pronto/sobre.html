@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nós - Pronto</title>
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827;
+            color: #f3f4f6;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top left, rgba(13, 97, 255, 0.1), transparent 40%),
+                        radial-gradient(circle at bottom right, rgba(22, 163, 74, 0.1), transparent 40%);
+            z-index: -1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Cabeçalho -->
+    <header class="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-40">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-white">
+                <span class="text-emerald-400">Pronto</span>
+            </a>
+            <div class="flex items-center space-x-4">
+                <a href="index.html" class="text-gray-300 hover:text-white font-semibold py-2 px-4 transition-colors duration-300">
+                    Início
+                </a>
+                <a href="dashboard.html" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300 flex items-center gap-2">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="container mx-auto px-6 py-12">
+        <div class="max-w-4xl mx-auto">
+            <!-- Cabeçalho -->
+            <div class="text-center mb-16">
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-4 text-white">Sobre o <span class="text-emerald-400">Pronto</span></h1>
+                <p class="text-lg md:text-xl text-gray-300">Conectando talentos entre Brasil e Angola</p>
+            </div>
+            
+            <!-- Missão -->
+            <div class="bg-gray-800/50 rounded-2xl p-8 mb-12 border border-gray-700">
+                <h2 class="text-2xl font-bold text-white mb-4">Nossa Missão</h2>
+                <p class="text-gray-300 mb-6">
+                    O Pronto nasceu da necessidade de criar pontes entre profissionais talentosos do Brasil e Angola, 
+                    facilitando a conexão com oportunidades de trabalho, estágios e projetos freelancer. 
+                    Acreditamos que o talento não tem fronteiras e que a diversidade é uma força poderosa para a inovação.
+                </p>
+                <p class="text-gray-300">
+                    Nosso objetivo é ser a plataforma de referência para profissionais que buscam visibilidade 
+                    e para empresas que procuram os melhores talentos desses dois países.
+                </p>
+            </div>
+            
+            <!-- Como Funciona -->
+            <div class="bg-gray-800/50 rounded-2xl p-8 mb-12 border border-gray-700">
+                <h2 class="text-2xl font-bold text-white mb-6">Como Funciona</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="bg-emerald-500/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-user-plus text-emerald-500 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white mb-2">1. Crie sua Conta</h3>
+                        <p class="text-gray-400">Cadastre-se gratuitamente e complete seu perfil</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-emerald-500/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-briefcase text-emerald-500 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white mb-2">2. Adicione seu Portfólio</h3>
+                        <p class="text-gray-400">Mostre suas habilidades e experiências profissionais</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-emerald-500/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-handshake text-emerald-500 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white mb-2">3. Conecte-se</h3>
+                        <p class="text-gray-400">Encontre oportunidades e seja encontrado por recrutadores</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Para Profissionais -->
+            <div class="bg-gray-800/50 rounded-2xl p-8 mb-12 border border-gray-700">
+                <h2 class="text-2xl font-bold text-white mb-4">Para Profissionais</h2>
+                <p class="text-gray-300 mb-6">
+                    Se você é um profissional buscando oportunidades no Brasil ou em Angola, o Pronto é a plataforma ideal para:
+                </p>
+                <ul class="list-disc list-inside text-gray-300 space-y-2 mb-6">
+                    <li>Mostrar seu trabalho e habilidades para um público amplo</li>
+                    <li>Conectar-se com empresas e recrutadores</li>
+                    <li>Encontrar oportunidades de trabalho, estágio e freelancer</li>
+                    <li>Receber avaliações e feedback sobre seu trabalho</li>
+                </ul>
+            </div>
+            
+            <!-- Para Empresas -->
+            <div class="bg-gray-800/50 rounded-2xl p-8 mb-12 border border-gray-700">
+                <h2 class="text-2xl font-bold text-white mb-4">Para Empresas</h2>
+                <p class="text-gray-300 mb-6">
+                    Se você é uma empresa em busca de talentos, o Pronto oferece:
+                </p>
+                <ul class="list-disc list-inside text-gray-300 space-y-2 mb-6">
+                    <li>Acesso a profissionais qualificados do Brasil e Angola</li>
+                    <li>Ferramentas para filtrar candidatos por habilidades e experiência</li>
+                    <li>Sistema de avaliação para verificar a qualidade dos profissionais</li>
+                    <li>Processo simplificado de contato e recrutamento</li>
+                </ul>
+            </div>
+            
+            <!-- Contato -->
+            <div class="bg-gray-800/50 rounded-2xl p-8 border border-gray-700">
+                <h2 class="text-2xl font-bold text-white mb-4">Entre em Contato</h2>
+                <p class="text-gray-300 mb-6">
+                    Tem dúvidas, sugestões ou precisa de ajuda? Entre em contato conosco:
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-lg font-semibold text-white mb-2">Email</h3>
+                        <p class="text-gray-400">contato@pronto.com</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-white mb-2">Redes Sociais</h3>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-400 hover:text-emerald-400"><i class="fab fa-facebook-f fa-lg"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-emerald-400"><i class="fab fa-instagram fa-lg"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-emerald-400"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-emerald-400"><i class="fab fa-twitter fa-lg"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="bg-gray-900 mt-16 border-t border-gray-800">
+        <div class="container mx-auto px-6 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <p class="font-bold text-lg text-white mb-2"><span class="text-emerald-400">Pronto</span></p>
+                    <p class="text-gray-400">Conectando talentos e oportunidades entre Brasil e Angola.</p>
+                </div>
+                <div>
+                    <p class="font-semibold text-white mb-2">Links Rápidos</p>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-emerald-400">Início</a></li>
+                        <li><a href="sobre.html" class="text-gray-400 hover:text-emerald-400">Sobre Nós</a></li>
+                        <li><a href="dashboard.html" class="text-gray-400 hover:text-emerald-400">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="font-semibold text-white mb-2">Contato</p>
+                    <p class="text-gray-400">Email: contato@pronto.com</p>
+                    <div class="flex space-x-4 mt-2">
+                        <a href="#" class="text-gray-400 hover:text-emerald-400"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-emerald-400"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-emerald-400"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Pronto. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Pronto</title>
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827;
+            color: #f3f4f6;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top left, rgba(13, 97, 255, 0.1), transparent 40%),
+                        radial-gradient(circle at bottom right, rgba(22, 163, 74, 0.1), transparent 40%);
+            z-index: -1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Cabeçalho -->
+    <header class="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-40">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-white">
+                <span class="text-emerald-400">Pronto</span>
+            </a>
+            <a href="index.html" class="text-gray-300 hover:text-white font-semibold py-2 px-4 transition-colors duration-300">
+                Voltar ao Início
+            </a>
+        </nav>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="container mx-auto px-6 py-12 flex items-center justify-center min-h-screen">
+        <div class="w-full max-w-md bg-gray-800 rounded-2xl p-8 border border-gray-700">
+            <div class="text-center mb-8">
+                <h1 class="text-2xl font-bold text-white" id="formTitle">Entrar na sua conta</h1>
+                <p class="text-gray-400 mt-2" id="formSubtitle">Acesse sua conta para gerenciar seu portfólio</p>
+            </div>
+            
+            <form id="authForm">
+                <div id="registerFields" class="hidden">
+                    <div class="mb-4">
+                        <label for="fullName" class="block text-gray-300 mb-1">Nome Completo *</label>
+                        <input type="text" id="fullName" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-300 mb-1">Email *</label>
+                    <input type="email" id="email" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                </div>
+                
+                <div class="mb-6">
+                    <label for="password" class="block text-gray-300 mb-1">Senha *</label>
+                    <input type="password" id="password" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                    <p id="passwordHelp" class="text-xs text-gray-500 mt-1 hidden">A senha deve ter pelo menos 6 caracteres</p>
+                </div>
+                
+                <div id="confirmPasswordField" class="mb-6 hidden">
+                    <label for="confirmPassword" class="block text-gray-300 mb-1">Confirmar Senha *</label>
+                    <input type="password" id="confirmPassword" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <p id="passwordMatchError" class="text-xs text-red-500 mt-1 hidden">As senhas não coincidem</p>
+                </div>
+                
+                <div class="mb-6" id="loginOptions">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input type="checkbox" id="rememberMe" class="h-4 w-4 bg-gray-700 border-gray-600 rounded text-emerald-500 focus:ring-emerald-500">
+                            <label for="rememberMe" class="ml-2 text-gray-300 text-sm">Lembrar-me</label>
+                        </div>
+                        <a href="#" class="text-sm text-emerald-500 hover:text-emerald-400">Esqueceu a senha?</a>
+                    </div>
+                </div>
+                
+                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-300 mb-4" id="submitButton">
+                    Entrar
+                </button>
+                
+                <div class="text-center">
+                    <p class="text-gray-400" id="switchFormText">
+                        Não tem uma conta? 
+                        <a href="#" id="switchFormLink" class="text-emerald-500 hover:text-emerald-400 font-semibold">Cadastre-se</a>
+                    </p>
+                </div>
+            </form>
+            
+            <div id="authMessage" class="mt-4 p-3 rounded-lg hidden"></div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const action = urlParams.get('action');
+            
+            if (action === 'register') {
+                switchToRegister();
+            }
+            
+            // Alternar entre login e registro
+            document.getElementById('switchFormLink').addEventListener('click', (e) => {
+                e.preventDefault();
+                const isLogin = document.getElementById('registerFields').classList.contains('hidden');
+                
+                if (isLogin) {
+                    switchToRegister();
+                } else {
+                    switchToLogin();
+                }
+            });
+            
+            function switchToRegister() {
+                document.getElementById('registerFields').classList.remove('hidden');
+                document.getElementById('confirmPasswordField').classList.remove('hidden');
+                document.getElementById('loginOptions').classList.add('hidden');
+                document.getElementById('formTitle').textContent = 'Criar uma conta';
+                document.getElementById('formSubtitle').textContent = 'Cadastre-se para criar seu portfólio';
+                document.getElementById('submitButton').textContent = 'Cadastrar';
+                document.getElementById('switchFormText').innerHTML = 'Já tem uma conta? <a href="#" id="switchFormLink" class="text-emerald-500 hover:text-emerald-400 font-semibold">Entrar</a>';
+            }
+            
+            function switchToLogin() {
+                document.getElementById('registerFields').classList.add('hidden');
+                document.getElementById('confirmPasswordField').classList.add('hidden');
+                document.getElementById('loginOptions').classList.remove('hidden');
+                document.getElementById('formTitle').textContent = 'Entrar na sua conta';
+                document.getElementById('formSubtitle').textContent = 'Acesse sua conta para gerenciar seu portfólio';
+                document.getElementById('submitButton').textContent = 'Entrar';
+                document.getElementById('switchFormText').innerHTML = 'Não tem uma conta? <a href="#" id="switchFormLink" class="text-emerald-500 hover:text-emerald-400 font-semibold">Cadastre-se</a>';
+            }
+            
+            // Validação de formulário
+            document.getElementById('authForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const isRegister = !document.getElementById('registerFields').classList.contains('hidden');
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                const fullName = isRegister ? document.getElementById('fullName').value : '';
+                
+                // Validações
+                if (isRegister) {
+                    if (password.length < 6) {
+                        showMessage('A senha deve ter pelo menos 6 caracteres', 'error');
+                        return;
+                    }
+                    
+                    if (password !== confirmPassword) {
+                        showMessage('As senhas não coincidem', 'error');
+                        return;
+                    }
+                    
+                    if (!fullName.trim()) {
+                        showMessage('Por favor, informe seu nome completo', 'error');
+                        return;
+                    }
+                    
+                    // Registrar usuário
+                    const success = registerUser(email, password, fullName);
+                    if (success) {
+                        showMessage('Conta criada com sucesso! Redirecionando...', 'success');
+                        setTimeout(() => {
+                            window.location.href = 'index.html';
+                        }, 1500);
+                    } else {
+                        showMessage('Este email já está em uso', 'error');
+                    }
+                } else {
+                    // Fazer login
+                    const success = loginUser(email, password);
+                    if (success) {
+                        showMessage('Login realizado com sucesso! Redirecionando...', 'success');
+                        setTimeout(() => {
+                            window.location.href = 'index.html';
+                        }, 1500);
+                    } else {
+                        showMessage('Email ou senha incorretos', 'error');
+                    }
+                }
+            });
+            
+            function showMessage(message, type) {
+                const messageDiv = document.getElementById('authMessage');
+                messageDiv.textContent = message;
+                messageDiv.classList.remove('hidden', 'bg-red-500/20', 'text-red-400', 'bg-emerald-500/20', 'text-emerald-400');
+                
+                if (type === 'error') {
+                    messageDiv.classList.add('bg-red-500/20', 'text-red-400');
+                } else {
+                    messageDiv.classList.add('bg-emerald-500/20', 'text-emerald-400');
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

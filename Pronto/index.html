@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pronto - Profissionais Brasil-Angola</title>
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827;
+            color: #f3f4f6;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top left, rgba(13, 97, 255, 0.1), transparent 40%),
+                        radial-gradient(circle at bottom right, rgba(22, 163, 74, 0.1), transparent 40%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .portfolio-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.2), 0 8px 10px -6px rgb(0 0 0 / 0.2);
+        }
+
+        .filter-btn.active {
+            background-color: #10b981;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .rating-stars {
+            color: #f59e0b;
+        }
+        
+        .loading-spinner {
+            border: 3px solid #f3f4f6;
+            border-top: 3px solid #10b981;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Cabeçalho -->
+    <header class="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-40">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-white">
+                <span class="text-emerald-400">Pronto</span>
+            </a>
+            <div class="flex items-center space-x-4">
+                <a href="sobre.html" class="text-gray-300 hover:text-white font-semibold py-2 px-4 transition-colors duration-300">
+                    Sobre Nós
+                </a>
+                <a href="dashboard.html" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300 flex items-center gap-2">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <button id="addPortfolioBtn" class="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300 flex items-center gap-2">
+                    <i class="fas fa-plus"></i>
+                    <span>Adicionar Portfólio</span>
+                </button>
+                <div id="userMenu" class="hidden">
+                    <button id="userMenuButton" class="flex items-center space-x-2">
+                        <img src="https://placehold.co/40x40/27272A/FFFFFF?text=U" alt="Usuário" class="w-8 h-8 rounded-full">
+                        <span class="text-white" id="userName">Usuário</span>
+                        <i class="fas fa-chevron-down text-gray-400"></i>
+                    </button>
+                    <div id="userDropdown" class="hidden absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg py-2 z-50">
+                        <a href="#" class="block px-4 py-2 text-gray-300 hover:bg-gray-700">Meu Perfil</a>
+                        <a href="#" id="logoutBtn" class="block px-4 py-2 text-gray-300 hover:bg-gray-700">Sair</a>
+                    </div>
+                </div>
+                <div id="authButtons" class="flex space-x-2">
+                    <a href="login.html" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300">
+                        Entrar
+                    </a>
+                    <a href="login.html?action=register" class="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300">
+                        Cadastrar
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Seção Principal -->
+    <main class="container mx-auto px-6 py-12">
+        <!-- Seção Hero -->
+        <section class="text-center mb-16">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-4 text-white leading-tight">
+                Profissionais <span class="text-emerald-400">Pronto</span> para Trabalhar
+            </h1>
+            <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+                Conectamos talentos do Brasil e Angola com oportunidades de trabalho, estágio e serviços freelancer.
+            </p>
+        </section>
+
+        <!-- Filtros e Busca -->
+        <section class="mb-10 p-6 bg-gray-800/50 rounded-2xl border border-gray-700">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
+                <!-- Busca -->
+                <div class="md:col-span-4">
+                     <label for="search-input" class="block text-sm font-medium text-gray-300 mb-2">Buscar por nome, profissão ou habilidades</label>
+                     <div class="relative">
+                         <input type="text" id="search-input" placeholder="Ex: Designer, Desenvolvedor, Marketing..." class="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                             <i class="fas fa-search text-gray-400"></i>
+                         </div>
+                     </div>
+                </div>
+            </div>
+            <div class="mt-6 flex flex-wrap justify-center gap-4" id="filter-container">
+                <!-- Filtros de botão serão gerados aqui pelo JS -->
+            </div>
+        </section>
+
+        <!-- Grade de Portfólios -->
+        <section id="portfolio-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <!-- Os cards de portfólio serão inseridos aqui pelo JavaScript -->
+        </section>
+        
+        <div id="loading" class="loading-spinner hidden"></div>
+        
+        <div id="no-results" class="text-center py-16 text-gray-400 hidden">
+            <i class="fas fa-search fa-3x mx-auto mb-4"></i>
+            <h3 class="text-2xl font-semibold">Nenhum portfólio encontrado</h3>
+            <p>Tente ajustar sua busca ou filtros para ver mais resultados.</p>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="bg-gray-900 mt-16 border-t border-gray-800">
+        <div class="container mx-auto px-6 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <p class="font-bold text-lg text-white mb-2"><span class="text-emerald-400">Pronto</span></p>
+                    <p class="text-gray-400">Conectando talentos e oportunidades entre Brasil e Angola.</p>
+                </div>
+                <div>
+                    <p class="font-semibold text-white mb-2">Links Rápidos</p>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-emerald-400">Início</a></li>
+                        <li><a href="sobre.html" class="text-gray-400 hover:text-emerald-400">Sobre Nós</a></li>
+                        <li><a href="dashboard.html" class="text-gray-400 hover:text-emerald-400">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="font-semibold text-white mb-2">Contato</p>
+                    <p class="text-gray-400">Email: contato@pronto.com</p>
+                    <div class="flex space-x-4 mt-2">
+                        <a href="#" class="text-gray-400 hover:text-emerald-400"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-emerald-400"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-emerald-400"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Pronto. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal para Adicionar Portfólio -->
+    <div id="portfolioModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-800 rounded-2xl p-8 w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto transform transition-all duration-300 scale-95 opacity-0">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-white">Adicionar Novo Portfólio</h2>
+                <button id="closeModalBtn" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times fa-lg"></i>
+                </button>
+            </div>
+            <form id="portfolioForm">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="mb-4">
+                        <label for="clientName" class="block text-gray-300 mb-1">Nome do Profissional *</label>
+                        <input type="text" id="clientName" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="profession" class="block text-gray-300 mb-1">Profissão *</label>
+                        <input type="text" id="profession" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ex: Desenvolvedor Web" required>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="mb-4">
+                        <label for="country" class="block text-gray-300 mb-1">País *</label>
+                        <select id="country" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                            <option value="">Selecione o país</option>
+                            <option value="Brasil">Brasil</option>
+                            <option value="Angola">Angola</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="state" class="block text-gray-300 mb-1">Estado/Província *</label>
+                        <select id="state" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                            <option value="">Selecione primeiro o país</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="mb-4">
+                        <label for="city" class="block text-gray-300 mb-1">Cidade *</label>
+                        <input type="text" id="city" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="availability" class="block text-gray-300 mb-1">Disponibilidade *</label>
+                        <select id="availability" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                            <option value="">Selecione uma opção</option>
+                            <option value="Pronto para trabalhar">Pronto para trabalhar</option>
+                            <option value="Estágio">Estágio</option>
+                            <option value="Voluntário">Voluntário</option>
+                            <option value="Freelancer">Freelancer</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="skills" class="block text-gray-300 mb-1">Habilidades (separadas por vírgula)</label>
+                    <input type="text" id="skills" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ex: HTML, CSS, JavaScript, Photoshop">
+                </div>
+                
+                <div class="mb-4">
+                    <label for="portfolioLink" class="block text-gray-300 mb-1">Link do Portfólio *</label>
+                    <input type="url" id="portfolioLink" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="https://..." required>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="imageUrl" class="block text-gray-300 mb-1">URL da Imagem de Perfil *</label>
+                    <input type="url" id="imageUrl" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="https://..." required>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="description" class="block text-gray-300 mb-1">Descrição/Resumo Profissional</label>
+                    <textarea id="description" rows="3" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Breve descrição das experiências e especialidades..."></textarea>
+                </div>
+                
+                <div class="mb-4 flex items-center">
+                    <input type="checkbox" id="isUnilab" class="h-5 w-5 bg-gray-700 border-gray-600 rounded text-emerald-500 focus:ring-emerald-500">
+                    <label for="isUnilab" class="ml-3 text-gray-300">É aluno da UNILAB?</label>
+                </div>
+                
+                <div class="mt-6">
+                    <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-300">Salvar Portfólio</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+</html>

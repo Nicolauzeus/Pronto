@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Pronto</title>
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827;
+            color: #f3f4f6;
+        }
+        
+        .dashboard-nav {
+            background-color: #1f2937;
+        }
+        
+        .dashboard-nav a:hover {
+            background-color: #374151;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            border-radius: 12px;
+        }
+        
+        .portfolio-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .portfolio-table th, .portfolio-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #374151;
+        }
+        
+        .portfolio-table th {
+            background-color: #1f2937;
+        }
+        
+        .portfolio-table tr:hover {
+            background-color: #1f2937;
+        }
+        
+        .config-section {
+            display: none;
+        }
+        
+        .config-section.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="flex h-screen">
+        <!-- Sidebar Navigation -->
+        <div class="dashboard-nav w-64 flex-shrink-0">
+            <div class="p-6">
+                <h1 class="text-2xl font-bold text-white">
+                    <span class="text-emerald-400">Pronto</span> Admin
+                </h1>
+            </div>
+            <nav class="mt-6">
+                <a href="#" class="block py-3 px-6 bg-emerald-500 text-white dashboard-link" data-section="dashboard">
+                    <i class="fas fa-tachometer-alt mr-3"></i>Dashboard
+                </a>
+                <a href="index.html" class="block py-3 px-6 text-gray-300 hover:bg-gray-800">
+                    <i class="fas fa-home mr-3"></i>Voltar ao Site
+                </a>
+                <a href="#" class="block py-3 px-6 text-gray-300 hover:bg-gray-800 dashboard-link" data-section="add-portfolio">
+                    <i class="fas fa-user-plus mr-3"></i>Adicionar Portfólio
+                </a>
+                <a href="#" class="block py-3 px-6 text-gray-300 hover:bg-gray-800 dashboard-link" data-section="configuracoes">
+                    <i class="fas fa-cog mr-3"></i>Configurações
+                </a>
+                <a href="#" id="logoutBtn" class="block py-3 px-6 text-gray-300 hover:bg-gray-800">
+                    <i class="fas fa-sign-out-alt mr-3"></i>Sair
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 overflow-auto">
+            <header class="bg-gray-800/80 backdrop-blur-sm sticky top-0 z-40 py-4 px-8 flex justify-between items-center">
+                <h2 class="text-xl font-semibold text-white" id="dashboard-title">Dashboard</h2>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <img src="https://nicolauzeus.vercel.app/eu.jpg" alt="Admin" class="w-10 h-10 rounded-full">
+                    </div>
+                </div>
+            </header>
+
+            <main class="p-8">
+                <!-- Seção Dashboard -->
+                <div id="dashboard-section" class="config-section active">
+                    <!-- Estatísticas -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="stat-card p-6">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <p class="text-gray-400">Total de Portfólios</p>
+                                    <h3 class="text-3xl font-bold text-white mt-2" id="total-portfolios">0</h3>
+                                </div>
+                                <div class="bg-emerald-500/20 p-3 rounded-full">
+                                    <i class="fas fa-user-friends text-emerald-500 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card p-6">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <p class="text-gray-400">Profissionais do Brasil</p>
+                                    <h3 class="text-3xl font-bold text-white mt-2" id="brazil-count">0</h3>
+                                </div>
+                                <div class="bg-blue-500/20 p-3 rounded-full">
+                                    <i class="fas fa-globe-americas text-blue-500 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card p-6">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <p class="text-gray-400">Profissionais de Angola</p>
+                                    <h3 class="text-3xl font-bold text-white mt-2" id="angola-count">0</h3>
+                                </div>
+                                <div class="bg-yellow-500/20 p-3 rounded-full">
+                                    <i class="fas fa-globe-africa text-yellow-500 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card p-6">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <p class="text-gray-400">Alunos UNILAB</p>
+                                    <h3 class="text-3xl font-bold text-white mt-2" id="unilab-count">0</h3>
+                                </div>
+                                <div class="bg-purple-500/20 p-3 rounded-full">
+                                    <i class="fas fa-graduation-cap text-purple-500 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabela de Portfólios -->
+                    <div class="bg-gray-800 rounded-2xl p-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xl font-semibold text-white">Todos os Portfólios</h3>
+                            <div class="relative">
+                                <input type="text" id="search-dashboard" placeholder="Buscar..." class="bg-gray-700 border border-gray-600 rounded-lg py-2 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-search text-gray-400"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="portfolio-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Profissão</th>
+                                        <th>Localização</th>
+                                        <th>Disponibilidade</th>
+                                        <th>Avaliação</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="portfolios-table-body">
+                                    <!-- Conteúdo preenchido pelo JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção Adicionar Portfólio -->
+                <div id="add-portfolio-section" class="config-section">
+                    <div class="bg-gray-800 rounded-2xl p-6">
+                        <h3 class="text-xl font-semibold text-white mb-6">Adicionar Novo Portfólio</h3>
+                        
+                        <form id="dashboard-portfolio-form">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="mb-4">
+                                    <label for="dashboard-clientName" class="block text-gray-300 mb-1">Nome do Profissional *</label>
+                                    <input type="text" id="dashboard-clientName" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="dashboard-profession" class="block text-gray-300 mb-1">Profissão *</label>
+                                    <input type="text" id="dashboard-profession" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ex: Desenvolvedor Web" required>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="mb-4">
+                                    <label for="dashboard-country" class="block text-gray-300 mb-1">País *</label>
+                                    <select id="dashboard-country" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                                        <option value="">Selecione o país</option>
+                                        <option value="Brasil">Brasil</option>
+                                        <option value="Angola">Angola</option>
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="dashboard-state" class="block text-gray-300 mb-1">Estado/Província *</label>
+                                    <select id="dashboard-state" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                                        <option value="">Selecione primeiro o país</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="mb-4">
+                                    <label for="dashboard-city" class="block text-gray-300 mb-1">Cidade *</label>
+                                    <input type="text" id="dashboard-city" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="dashboard-availability" class="block text-gray-300 mb-1">Disponibilidade *</label>
+                                    <select id="dashboard-availability" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                                        <option value="">Selecione uma opção</option>
+                                        <option value="Pronto para trabalhar">Pronto para trabalhar</option>
+                                        <option value="Estágio">Estágio</option>
+                                        <option value="Voluntário">Voluntário</option>
+                                        <option value="Freelancer">Freelancer</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="dashboard-skills" class="block text-gray-300 mb-1">Habilidades (separadas por vírgula)</label>
+                                <input type="text" id="dashboard-skills" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ex: HTML, CSS, JavaScript, Photoshop">
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="dashboard-portfolioLink" class="block text-gray-300 mb-1">Link do Portfólio *</label>
+                                <input type="url" id="dashboard-portfolioLink" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="https://..." required>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="dashboard-imageUrl" class="block text-gray-300 mb-1">URL da Imagem de Perfil *</label>
+                                <input type="url" id="dashboard-imageUrl" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="https://..." required>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="dashboard-description" class="block text-gray-300 mb-1">Descrição/Resumo Profissional</label>
+                                <textarea id="dashboard-description" rows="3" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Breve descrição das experiências e especialidades..."></textarea>
+                            </div>
+                            
+                            <div class="mb-4 flex items-center">
+                                <input type="checkbox" id="dashboard-isUnilab" class="h-5 w-5 bg-gray-700 border-gray-600 rounded text-emerald-500 focus:ring-emerald-500">
+                                <label for="dashboard-isUnilab" class="ml-3 text-gray-300">É aluno da UNILAB?</label>
+                            </div>
+                            
+                            <div class="mt-6">
+                                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-300">Salvar Portfólio</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Seção Configurações -->
+                <div id="configuracoes-section" class="config-section">
+                    <div class="bg-gray-800 rounded-2xl p-6">
+                        <h3 class="text-xl font-semibold text-white mb-6">Configurações</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                            <div class="bg-gray-700 p-4 rounded-lg">
+                                <h4 class="font-semibold text-white mb-2">Conta</h4>
+                                <p class="text-gray-400 text-sm">Gerencie suas informações de conta</p>
+                                <button class="mt-3 text-emerald-400 hover:text-emerald-300 text-sm">Editar</button>
+                            </div>
+                            
+                            <div class="bg-gray-700 p-4 rounded-lg">
+                                <h4 class="font-semibold text-white mb-2">Privacidade</h4>
+                                <p class="text-gray-400 text-sm">Controle sua privacidade e dados</p>
+                                <button class="mt-3 text-emerald-400 hover:text-emerald-300 text-sm">Configurar</button>
+                            </div>
+                            
+                            <div class="bg-gray-700 p-4 rounded-lg">
+                                <h4 class="font-semibold text-white mb-2">Notificações</h4>
+                                <p class="text-gray-400 text-sm">Gerencie suas notificações</p>
+                                <button class="mt-3 text-emerald-400 hover:text-emerald-300 text-sm">Configurar</button>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-700 p-6 rounded-lg">
+                            <h4 class="font-semibold text-white mb-4">Informações da Conta</h4>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-gray-300 mb-1">Nome</label>
+                                    <p class="text-white" id="user-fullname">Carregando...</p>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-300 mb-1">Email</label>
+                                    <p class="text-white" id="user-email">Carregando...</p>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-300 mb-1">Data de Criação</label>
+                                    <p class="text-white" id="user-created">Carregando...</p>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-300 mb-1">Status do Portfólio</label>
+                                    <p class="text-white" id="user-portfolio-status">Carregando...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal de Edição -->
+    <div id="editModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-800 rounded-2xl p-8 w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-white">Editar Portfólio</h2>
+                <button id="closeEditModalBtn" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times fa-lg"></i>
+                </button>
+            </div>
+            <form id="editForm">
+                <input type="hidden" id="edit-id">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="mb-4">
+                        <label for="edit-name" class="block text-gray-300 mb-1">Nome do Profissional *</label>
+                        <input type="text" id="edit-name" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="edit-profession" class="block text-gray-300 mb-1">Profissão *</label>
+                        <input type="text" id="edit-profession" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="mb-4">
+                        <label for="edit-country" class="block text-gray-300 mb-1">País *</label>
+                        <select id="edit-country" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                            <option value="Brasil">Brasil</option>
+                            <option value="Angola">Angola</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="edit-state" class="block text-gray-300 mb-1">Estado/Província *</label>
+                        <select id="edit-state" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                            <!-- Estados serão preenchidos via JavaScript -->
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="mb-4">
+                        <label for="edit-city" class="block text-gray-300 mb-1">Cidade *</label>
+                        <input type="text" id="edit-city" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="edit-availability" class="block text-gray-300 mb-1">Disponibilidade *</label>
+                        <select id="edit-availability" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                            <option value="Pronto para trabalhar">Pronto para trabalhar</option>
+                            <option value="Estágio">Estágio</option>
+                            <option value="Voluntário">Voluntário</option>
+                            <option value="Freelancer">Freelancer</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="edit-skills" class="block text-gray-300 mb-1">Habilidades (separadas por vírgula)</label>
+                    <input type="text" id="edit-skills" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                
+                <div class="mb-4">
+                    <label for="edit-portfolioLink" class="block text-gray-300 mb-1">Link do Portfólio *</label>
+                    <input type="url" id="edit-portfolioLink" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="edit-imageUrl" class="block text-gray-300 mb-1">URL da Imagem de Perfil *</label>
+                    <input type="url" id="edit-imageUrl" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="edit-description" class="block text-gray-300 mb-1">Descrição/Resumo Profissional</label>
+                    <textarea id="edit-description" rows="3" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"></textarea>
+                </div>
+                
+                <div class="mb-4 flex items-center">
+                    <input type="checkbox" id="edit-isUnilab" class="h-5 w-5 bg-gray-700 border-gray-600 rounded text-emerald-500 focus:ring-emerald-500">
+                    <label for="edit-isUnilab" class="ml-3 text-gray-300">É aluno da UNILAB?</label>
+                </div>
+                
+                <div class="mt-6 flex space-x-4">
+                    <button type="submit" class="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-300">Salvar Alterações</button>
+                    <button type="button" id="cancelEditBtn" class="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-300">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+
+</body>
+</html>
