@@ -35,6 +35,41 @@
             z-index: -1;
             pointer-events: none;
         }
+        
+        .content-with-image {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        @media (min-width: 768px) {
+            .content-with-image {
+                flex-direction: row;
+                align-items: center;
+            }
+            
+            .content-with-image.reverse {
+                flex-direction: row-reverse;
+            }
+            
+            .text-content {
+                flex: 1;
+            }
+            
+            .image-content {
+                flex: 1;
+            }
+        }
+        
+        .rounded-image {
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .rounded-image:hover {
+            transform: scale(1.02);
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -68,16 +103,25 @@
             
             <!-- Missão -->
             <div class="bg-gray-800/50 rounded-2xl p-8 mb-12 border border-gray-700">
-                <h2 class="text-2xl font-bold text-white mb-4">Nossa Missão</h2>
-                <p class="text-gray-300 mb-6">
-                    O Pronto nasceu da necessidade de criar pontes entre profissionais talentosos do Brasil e Angola, 
-                    facilitando a conexão com oportunidades de trabalho, estágios e projetos freelancer. 
-                    Acreditamos que o talento não tem fronteiras e que a diversidade é uma força poderosa para a inovação.
-                </p>
-                <p class="text-gray-300">
-                    Nosso objetivo é ser a plataforma de referência para profissionais que buscam visibilidade 
-                    e para empresas que procuram os melhores talentos desses dois países.
-                </p>
+                <div class="content-with-image">
+                    <div class="text-content">
+                        <h2 class="text-2xl font-bold text-white mb-4">Nossa Missão</h2>
+                        <p class="text-gray-300 mb-6">
+                            O Pronto nasceu da necessidade de criar pontes entre profissionais talentosos do Brasil e Angola, 
+                            facilitando a conexão com oportunidades de trabalho, estágios e projetos freelancer. 
+                            Acreditamos que o talento não tem fronteiras e que a diversidade é uma força poderosa para a inovação.
+                        </p>
+                        <p class="text-gray-300">
+                            Nosso objetivo é ser a plataforma de referência para profissionais que buscam visibilidade 
+                            e para empresas que procuram os melhores talentos desses dois países.
+                        </p>
+                    </div>
+                    <div class="image-content">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&q=80" 
+                             alt="Jovens profissionais negros colaborando" 
+                             class="w-full rounded-image">
+                    </div>
+                </div>
             </div>
             
             <!-- Como Funciona -->
@@ -106,34 +150,68 @@
                         <p class="text-gray-400">Encontre oportunidades e seja encontrado por recrutadores</p>
                     </div>
                 </div>
+                
+                <div class="mt-10 content-with-image reverse">
+                    <div class="text-content">
+                        <h3 class="text-xl font-bold text-white mb-4">Um Processo Simples e Eficiente</h3>
+                        <p class="text-gray-300">
+                            Desenvolvemos uma plataforma intuitiva que facilita o encontro entre talento e oportunidade.
+                            Em poucos passos, você estará visível para empresas e recrutadores que buscam profissionais
+                            qualificados no Brasil e em Angola.
+                        </p>
+                    </div>
+                    <div class="image-content">
+                        <img src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80" 
+                             alt="Jovem profissional negro em reunião de negócios" 
+                             class="w-full rounded-image">
+                    </div>
+                </div>
             </div>
             
             <!-- Para Profissionais -->
             <div class="bg-gray-800/50 rounded-2xl p-8 mb-12 border border-gray-700">
-                <h2 class="text-2xl font-bold text-white mb-4">Para Profissionais</h2>
-                <p class="text-gray-300 mb-6">
-                    Se você é um profissional buscando oportunidades no Brasil ou em Angola, o Pronto é a plataforma ideal para:
-                </p>
-                <ul class="list-disc list-inside text-gray-300 space-y-2 mb-6">
-                    <li>Mostrar seu trabalho e habilidades para um público amplo</li>
-                    <li>Conectar-se com empresas e recrutadores</li>
-                    <li>Encontrar oportunidades de trabalho, estágio e freelancer</li>
-                    <li>Receber avaliações e feedback sobre seu trabalho</li>
-                </ul>
+                <div class="content-with-image">
+                    <div class="text-content">
+                        <h2 class="text-2xl font-bold text-white mb-4">Para Profissionais</h2>
+                        <p class="text-gray-300 mb-6">
+                            Se você é um profissional buscando oportunidades no Brasil ou em Angola, o Pronto é a plataforma ideal para:
+                        </p>
+                        <ul class="list-disc list-inside text-gray-300 space-y-2 mb-6">
+                            <li>Mostrar seu trabalho e habilidades para um público amplo</li>
+                            <li>Conectar-se com empresas e recrutadores</li>
+                            <li>Encontrar oportunidades de trabalho, estágio e freelancer</li>
+                            <li>Receber avaliações e feedback sobre seu trabalho</li>
+                        </ul>
+                    </div>
+                    <div class="image-content">
+                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80" 
+                             alt="Jovem programador negro trabalhando" 
+                             class="w-full rounded-image">
+                    </div>
+                </div>
             </div>
             
             <!-- Para Empresas -->
             <div class="bg-gray-800/50 rounded-2xl p-8 mb-12 border border-gray-700">
-                <h2 class="text-2xl font-bold text-white mb-4">Para Empresas</h2>
-                <p class="text-gray-300 mb-6">
-                    Se você é uma empresa em busca de talentos, o Pronto oferece:
-                </p>
-                <ul class="list-disc list-inside text-gray-300 space-y-2 mb-6">
-                    <li>Acesso a profissionais qualificados do Brasil e Angola</li>
-                    <li>Ferramentas para filtrar candidatos por habilidades e experiência</li>
-                    <li>Sistema de avaliação para verificar a qualidade dos profissionais</li>
-                    <li>Processo simplificado de contato e recrutamento</li>
-                </ul>
+                <div class="content-with-image reverse">
+                    <div class="text-content">
+                        <h2 class="text-2xl font-bold text-white mb-4">Para Empresas</h2>
+                        <p class="text-gray-300 mb-6">
+                            Se você é uma empresa em busca de talentos, o Pronto oferece:
+                        </p>
+                        <ul class="list-disc list-inside text-gray-300 space-y-2 mb-6">
+                            <li>Acesso a profissionais qualificados do Brasil e Angola</li>
+                            <li>Ferramentas para filtrar candidatos por habilidades e experiência</li>
+                            <li>Sistema de avaliação para verificar a qualidade dos profissionais</li>
+                            <li>Processo simplificado de contato e recrutamento</li>
+                        </ul>
+                    </div>
+                    <div class="image-content">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80" 
+                             alt="Equipe diversificada de profissionais em reunião" 
+                             class="w-full rounded-image">
+                    </div>
+                </div>
             </div>
             
             <!-- Contato -->
@@ -155,6 +233,21 @@
                             <a href="#" class="text-gray-400 hover:text-emerald-400"><i class="fab fa-linkedin-in fa-lg"></i></a>
                             <a href="#" class="text-gray-400 hover:text-emerald-400"><i class="fab fa-twitter fa-lg"></i></a>
                         </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 content-with-image">
+                    <div class="text-content">
+                        <h3 class="text-xl font-bold text-white mb-4">Junte-se à Nossa Comunidade</h3>
+                        <p class="text-gray-300">
+                            Estamos construindo uma comunidade vibrante de profissionais talentosos e empresas inovadoras.
+                            Participe dessa rede que valoriza a diversidade e o talento sem fronteiras.
+                        </p>
+                    </div>
+                    <div class="image-content">
+                        <img src="https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80" 
+                             alt="Comunidade diversificada de profissionais" 
+                             class="w-full rounded-image">
                     </div>
                 </div>
             </div>
@@ -179,7 +272,7 @@
                 </div>
                 <div>
                     <p class="font-semibold text-white mb-2">Contato</p>
-                    <p class="text-gray-400">Email: contato@pronto.com</p>
+                    <p class="text-gray-400">Email: superdevs101.dev@gamil.com</p>
                     <div class="flex space-x-4 mt-2">
                         <a href="#" class="text-gray-400 hover:text-emerald-400"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" class="text-gray-400 hover:text-emerald-400"><i class="fab fa-instagram"></i></a>
