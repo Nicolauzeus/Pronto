@@ -124,23 +124,61 @@
         </section>
 
         <!-- Filtros e Busca -->
-        <section class="mb-10 p-6 bg-gray-800/50 rounded-2xl border border-gray-700">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
-                <!-- Busca -->
-                <div class="md:col-span-4">
-                     <label for="search-input" class="block text-sm font-medium text-gray-300 mb-2">Buscar por nome, profissão ou habilidades</label>
-                     <div class="relative">
-                         <input type="text" id="search-input" placeholder="Ex: Designer, Desenvolvedor, Marketing..." class="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                             <i class="fas fa-search text-gray-400"></i>
-                         </div>
-                     </div>
+        <!-- Substituir esta parte no index.html -->
+<section class="mb-10 p-6 bg-gray-800/50 rounded-2xl border border-gray-700">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
+        <!-- Busca -->
+        <div class="md:col-span-4">
+            <label for="search-input" class="block text-sm font-medium text-gray-300 mb-2">Buscar por nome, profissão ou habilidades</label>
+            <div class="relative">
+                <input type="text" id="search-input" placeholder="Ex: Designer, Desenvolvedor, Marketing..." class="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i class="fas fa-search text-gray-400"></i>
                 </div>
             </div>
-            <div class="mt-6 flex flex-wrap justify-center gap-4" id="filter-container">
-                <!-- Filtros de botão serão gerados aqui pelo JS -->
-            </div>
-        </section>
+        </div>
+        
+        <!-- Filtro de Profissão (Select) -->
+        <div>
+            <label for="profession-filter" class="block text-sm font-medium text-gray-300 mb-2">Profissão</label>
+            <select id="profession-filter" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <option value="all">Todas as profissões</option>
+                <!-- As opções serão preenchidas via JavaScript -->
+            </select>
+        </div>
+        
+        <!-- Filtro de País -->
+        <div>
+            <label for="country-filter" class="block text-sm font-medium text-gray-300 mb-2">País</label>
+            <select id="country-filter" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <option value="all">Todos os países</option>
+                <option value="Brasil">Brasil</option>
+                <option value="Angola">Angola</option>
+            </select>
+        </div>
+        
+        <!-- Filtro de Disponibilidade -->
+        <div>
+            <label for="availability-filter" class="block text-sm font-medium text-gray-300 mb-2">Disponibilidade</label>
+            <select id="availability-filter" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <option value="all">Todas as disponibilidades</option>
+                <option value="Pronto para trabalhar">Pronto para trabalhar</option>
+                <option value="Estágio">Estágio</option>
+                <option value="Voluntário">Voluntário</option>
+                <option value="Freelancer">Freelancer</option>
+            </select>
+        </div>
+        
+        <!-- Filtro UNILAB -->
+        <div>
+            <label for="unilab-filter" class="block text-sm font-medium text-gray-300 mb-2">Alunos UNILAB</label>
+            <select id="unilab-filter" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <option value="all">Todos</option>
+                <option value="true">Apenas alunos UNILAB</option>
+            </select>
+        </div>
+    </div>
+</section>
 
         <!-- Grade de Portfólios -->
         <section id="portfolio-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
