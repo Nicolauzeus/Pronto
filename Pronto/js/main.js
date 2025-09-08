@@ -3,6 +3,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const initialPortfolios = [
         {
             id: 1,
+            name: 'Nicolau Capingna',
+            profession: 'Desenvolvedor Fullstack',
+            country: 'Angola',
+            state: 'Luanda',
+            city: 'Luanda',
+            availability: 'Pronto para trabalhar',
+            skills: ['JavaScript', 'React', 'Node.js', 'Python', 'MongoDB'],
+            isUnilab: true,
+            imageUrl: 'https://nicolauzeus.vercel.app/eu.jpg',
+            portfolioUrl: 'https://nicolauzeus.vercel.app',
+            rating: 4.8,
+            description: 'Desenvolvedor fullstack com experiência em aplicações web modernas. Especializado em JavaScript, React e Node.js.',
+            userId: 1 // ID do usuário dono do portfólio
+        },
+        {
+            id: 2,
             name: 'Ana Silva',
             profession: 'Designer UX/UI',
             country: 'Brasil',
@@ -15,10 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
             portfolioUrl: 'https://vercel.com',
             rating: 4.5,
             description: 'Designer com 5 anos de experiência em projetos digitais',
-            userId: 1 // ID do usuário dono do portfólio
+            userId: 1
         },
         {
-            id: 2,
+            id: 3,
             name: 'Bruno Costa',
             profession: 'Desenvolvedor Web',
             country: 'Brasil',
@@ -34,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
             userId: 1
         },
         {
-            id: 3,
+            id: 4,
             name: 'Carlos Mendes',
             profession: 'Engenheiro Civil',
             country: 'Angola',
@@ -85,6 +101,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const addPortfolioBtn = document.getElementById('addPortfolioBtn');
     const closeModalBtn = document.getElementById('closeModalBtn');
     const portfolioForm = document.getElementById('portfolioForm');
+
+    // Filtros select
+    const professionFilter = document.getElementById('profession-filter');
+    const countryFilter = document.getElementById('country-filter');
+    const availabilityFilter = document.getElementById('availability-filter');
+    const unilabFilter = document.getElementById('unilab-filter');
 
     // Estado dos filtros
     let activeFilters = {
@@ -137,44 +159,23 @@ document.addEventListener('DOMContentLoaded', () => {
         return `<div class="rating-stars flex text-sm">${stars} <span class="ml-1 text-gray-400">(${rating.toFixed(1)})</span></div>`;
     };
 
-    // Gerar os botões de filtro
-    const generateFilterButtons = () => {
+    // Popular o select de profissões
+    const populateProfessionFilter = () => {
         const professions = ['all', ...new Set(portfolios.map(p => p.profession))];
-        const countries = ['all', ...new Set(portfolios.map(p => p.country))];
-        const states = ['all', ...new Set(portfolios.map(p => p.state))];
-        const availabilityOptions = ['all', ...new Set(portfolios.map(p => p.availability))];
-        const unilabOptions = { all: 'Todos', true: 'Alunos UNILAB' };
-
-        filterContainer.innerHTML = `
-            <div class="filter-group">
-                <h3 class="font-semibold mb-2 text-center text-gray-300">Profissão</h3>
-                <div class="flex flex-wrap justify-center gap-2">
-                    ${professions.map(p => `<button data-filter-type="profession" data-filter-value="${p}" class="filter-btn ${p === 'all' ? 'active' : ''} bg-gray-700 hover:bg-gray-600 text-gray-200 py-2 px-4 rounded-full text-sm font-semibold transition-all">${p === 'all' ? 'Todas' : p}</button>`).join('')}
-                </div>
-            </div>
-            <div class="filter-group mt-4">
-                <h3 class="font-semibold mb-2 text-center text-gray-300">País</h3>
-                <div class="flex flex-wrap justify-center gap-2">
-                    ${countries.map(c => `<button data-filter-type="country" data-filter-value="${c}" class="filter-btn ${c === 'all' ? 'active' : ''} bg-gray-700 hover:bg-gray-600 text-gray-200 py-2 px-4 rounded-full text-sm font-semibold transition-all">${c === 'all' ? 'Todos' : c}</button>`).join('')}
-                </div>
-            </div>
-            <div class="filter-group mt-4">
-                <h3 class="font-semibold mb-2 text-center text-gray-300">Disponibilidade</h3>
-                <div class="flex flex-wrap justify-center gap-2">
-                    ${availabilityOptions.map(a => `<button data-filter-type="availability" data-filter-value="${a}" class="filter-btn ${a === 'all' ? 'active' : ''} bg-gray-700 hover:bg-gray-600 text-gray-200 py-2 px-4 rounded-full text-sm font-semibold transition-all">${a === 'all' ? 'Todas' : a}</button>`).join('')}
-                </div>
-            </div>
-            <div class="filter-group mt-4">
-                <h3 class="font-semibold mb-2 text-center text-gray-300">Especial</h3>
-                <div class="flex flex-wrap justify-center gap-2">
-                    ${Object.entries(unilabOptions).map(([value, label]) => `<button data-filter-type="unilab" data-filter-value="${value}" class="filter-btn ${value === 'all' ? 'active' : ''} bg-gray-700 hover:bg-gray-600 text-gray-200 py-2 px-4 rounded-full text-sm font-semibold transition-all">${label}</button>`).join('')}
-                </div>
-            </div>
-        `;
         
-        // Adiciona os event listeners aos novos botões
-        document.querySelectorAll('.filter-btn').forEach(button => {
-            button.addEventListener('click', handleFilterClick);
+        // Limpar opções existentes (exceto a primeira)
+        while (professionFilter.options.length > 1) {
+            professionFilter.remove(1);
+        }
+        
+        // Adicionar novas opções
+        professions.forEach(profession => {
+            if (profession !== 'all') {
+                const option = document.createElement('option');
+                option.value = profession;
+                option.textContent = profession;
+                professionFilter.appendChild(option);
+            }
         });
     };
 
@@ -294,24 +295,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Aplicar filtros e renderizar
     const applyFiltersAndRender = () => {
+        // Atualizar activeFilters com os valores dos selects
+        activeFilters.profession = professionFilter.value;
+        activeFilters.country = countryFilter.value;
+        activeFilters.availability = availabilityFilter.value;
+        activeFilters.unilab = unilabFilter.value;
+        
         allFilteredPortfolios = filterPortfolios();
         renderPortfolios(allFilteredPortfolios);
-    };
-
-    // Lidar com clique nos filtros
-    const handleFilterClick = (event) => {
-        const button = event.currentTarget;
-        const type = button.dataset.filterType;
-        const value = button.dataset.filterValue;
-
-        activeFilters[type] = value;
-        
-        document.querySelectorAll(`.filter-btn[data-filter-type="${type}"]`).forEach(btn => {
-            btn.classList.remove('active');
-        });
-        
-        button.classList.add('active');
-        applyFiltersAndRender();
     };
 
     // Event listeners
@@ -320,6 +311,23 @@ document.addEventListener('DOMContentLoaded', () => {
             searchTerm = e.target.value.toLowerCase();
             applyFiltersAndRender();
         });
+    }
+    
+    // Event listeners para os selects de filtro
+    if (professionFilter) {
+        professionFilter.addEventListener('change', applyFiltersAndRender);
+    }
+    
+    if (countryFilter) {
+        countryFilter.addEventListener('change', applyFiltersAndRender);
+    }
+    
+    if (availabilityFilter) {
+        availabilityFilter.addEventListener('change', applyFiltersAndRender);
+    }
+    
+    if (unilabFilter) {
+        unilabFilter.addEventListener('change', applyFiltersAndRender);
     }
     
     // Modal functions
@@ -399,17 +407,20 @@ document.addEventListener('DOMContentLoaded', () => {
             // Atualizar status do usuário
             updateUserPortfolioStatus(true);
             
+            // Atualizar o select de profissões
+            populateProfessionFilter();
+            
             portfolioForm.reset();
             closeModal();
             
             // Recria os botões de filtro e renderiza tudo
-            initialize();
+            applyFiltersAndRender();
         });
     }
 
     // Inicialização
     const initialize = () => {
-        generateFilterButtons();
+        populateProfessionFilter();
         applyFiltersAndRender();
         updateAuthUI();
     };
