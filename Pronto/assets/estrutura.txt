@@ -1,4 +1,4 @@
-Pronto/
+SeuPort/
 ├── index.html              # Página principal
 ├── dashboard.html          # Painel de administração
 ├── css/
